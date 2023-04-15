@@ -23,6 +23,27 @@
   text-decoration: none;
 }
 
+.register {
+  margin-left: 30vh;
+}
+
+.inputBox {
+  display: block;
+  margin: 15px;
+  padding: 7px;
+  width: 300px;
+  border: 1px solid skyblue;
+}
+
+.appButton {
+  margin: 15px;
+  padding: 9px;
+  width: 120px;
+  background-color: skyblue;
+  border: 1px solid;
+  cursor: pointer;
+}
+
 .footer {
   position: absolute;
   margin: auto;
@@ -31,6 +52,10 @@
   background-color: skyblue;
   width: 100%;
 }
+
+
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
