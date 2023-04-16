@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () =>
 {
@@ -15,11 +15,11 @@ const SignUp = () =>
         {
             navigate('/');
         }
-    });
+    }, [navigate]);
 
     const collectData = async () =>
     {
-        console.warn(name, email, password);
+        // console.warn(name, email, password);
 
         let result = await fetch('http://localhost:5000/register', {
             method: 'post',
@@ -29,7 +29,7 @@ const SignUp = () =>
             },
         });
         result = await result.json();
-        console.warn(result);
+        //console.warn(result);
         localStorage.setItem("user", JSON.stringify(result));
         if (result)
         {

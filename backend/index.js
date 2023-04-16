@@ -10,10 +10,30 @@ app.post('/register', async (req, resp) =>
 {
     let user = new User(req.body);
     let result = await user.save();
+    result = result.toObject();
+    delete result.password;
     resp.send(result);
-    console.log(result);
+    /*  console.log(result); */
 });
 
+app.post("/login", async (req, resp) =>
+{
+    // console.log(req.body);
+    let user = await User.findOne(req.body).select("-password");
+    if (req.body.email && req.body.password)
+    {
+        if (user)
+        {
+            resp.send(user);
+        } else
+        {
+            resp.send({ result: "User Not found!" });
+        }
+    } else
+    {
+        resp.send({ result: "User Not found!" });
+    }
+});
 
 /* const connectDB = async () =>
 {

@@ -3,7 +3,8 @@ import Nav from './components/Nav';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import SignUp from './components/SignUp';
-import PrivateComponent from './components/PrivateComponent'
+import PrivateComponent from './components/PrivateComponent';
+import Login from './components/Login';
 
 function App()
 {
@@ -20,6 +21,7 @@ function App()
             <Route path='/profile' element={<h1>Profile Component</h1>} />
           </Route>
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
         {/* <h1>E-Dashboard</h1> */}
         {/* <Footer /> */} {/* we use routing in Footer then use Footer Component in BrowserRouter */}
