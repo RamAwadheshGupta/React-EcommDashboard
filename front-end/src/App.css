@@ -35,7 +35,8 @@
   text-decoration: none;
 }
 
-.register {
+.register,
+.product {
   margin-left: 30vh;
 }
 
@@ -59,6 +60,13 @@
   background-color: skyblue;
   border: 1px solid;
   cursor: pointer;
+}
+
+.invalid-input {
+  color: red;
+  margin-top: -15px;
+  margin-left: 20px;
+  display: block;
 }
 
 .footer {
