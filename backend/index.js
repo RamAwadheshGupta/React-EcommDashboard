@@ -59,6 +59,15 @@ app.get("/products", async (req, resp) =>
     }
 });
 
+// product delete api
+
+app.delete("/product/:id", async (req, resp) =>
+{
+    let result = await Product.deleteOne({ _id: req.params.id });
+    resp.send(result);
+
+});
+
 /* const connectDB = async () =>
 {
     mongoose.connect('mongodb://localhost:27017/e-comm');
