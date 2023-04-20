@@ -67,6 +67,32 @@ app.delete("/product/:id", async (req, resp) =>
     resp.send(result);
 
 });
+//get single product api
+app.get("/product/:id", async (req, resp) =>
+{
+
+    let result = await Product.findOne({ _id: req.params.id });
+    /* console.log(result);
+    resp.send("ok"); */
+    if (result)
+    {
+        resp.send(result);
+    } else
+    {
+        resp.send({ result: "No Record Found!" });
+    }
+});
+//update single product data using put method  api
+app.put("/product/:id", async (req, resp) =>
+{
+    let result = await Product.updateOne(
+        { _id: req.params.id },
+        {
+            $set: req.body
+        }
+    );
+    resp.send(result);
+});
 
 /* const connectDB = async () =>
 {
