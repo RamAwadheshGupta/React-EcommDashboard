@@ -85,6 +85,14 @@
   width: 120px;
 }
 
+.search-product-box {
+  width: 350px;
+  margin: 20px;
+  height: 40px;
+  border: 1px solid skyblue;
+  padding-left: 20px;
+}
+
 .footer {
   position: absolute;
   margin: auto;

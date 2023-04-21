@@ -3,6 +3,10 @@ const cors = require('cors');
 require('./db/config');
 const User = require('./db/User');
 const Product = require('./db/Products');
+
+const Jwt = require('jsonwebtoken');
+const jwtKey = 'UA';
+
 const app = express();
 
 app.use(express.json());
@@ -13,7 +17,16 @@ app.post('/register', async (req, resp) =>
     let result = await user.save();
     result = result.toObject();
     delete result.password;
-    resp.send(result);
+    //resp.send(result);
+    Jwt.sign({ result }, jwtKey, { expiresIn: "2h" }, (err, token) =>
+    {
+        if (err)
+        {
+            resp.send({ result: "Something went wrong, please try after sometime!" })
+        }
+        resp.send({ result, auth: token });
+    })
+
     /*  console.log(result); */
 });
 
@@ -25,7 +38,15 @@ app.post("/login", async (req, resp) =>
     {
         if (user)
         {
-            resp.send(user);
+            Jwt.sign({ user }, jwtKey, { expiresIn: "2h" }, (err, token) =>
+            {
+                if (err)
+                {
+                    resp.send({ result: "Something went wrong, please try after sometime!" })
+                }
+                resp.send({ user, auth: token });
+            })
+
         } else
         {
             resp.send({ result: "User Not found!" });
@@ -91,6 +112,19 @@ app.put("/product/:id", async (req, resp) =>
             $set: req.body
         }
     );
+    resp.send(result);
+});
+//search api using get method
+app.get("/search/:key", async (req, resp) =>
+{
+    let result = await Product.find({
+        "$or": [
+            { name: { $regex: req.params.key } },
+            { company: { $regex: req.params.key } },
+            { category: { $regex: req.params.key } },
+            { price: { $regex: req.params.key } }
+        ]
+    });
     resp.send(result);
 });
 
