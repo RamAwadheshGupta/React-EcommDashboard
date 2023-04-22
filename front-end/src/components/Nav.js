@@ -5,20 +5,23 @@ const Nav = () =>
 {
     const auth = localStorage.getItem("user");
     const navigate = useNavigate();
+
     const logout = () =>
     {
         //console.warn("log out");
         localStorage.clear();
         navigate("/signup");
     }
+
     return (
         <div>
             <img
                 alt='UA Logo'
                 className="logo"
-                src='https://scontent.fdel21-1.fna.fbcdn.net/v/t39.30808-1/291207394_402128965268456_2487719165515053027_n.jpg?stp=c0.0.200.200a_dst-jpg_p200x200&_nc_cat=108&ccb=1-7&_nc_sid=c6021c&_nc_ohc=XgwMuyHU6CoAX-XjsiI&_nc_ht=scontent.fdel21-1.fna&oh=00_AfCjDaRjBR1MrXQ7n90P3NC8jzc8OwFd6HZ5B_AjxFHNEg&oe=64417967' />
+                src='https://www.urbanavenues.in/wp-content/uploads/2022/08/Small-logo.jpg' />
             {
                 auth ?
+
                     <ul className="nav-ul">
                         <li><Link to="/" >Products</Link></li>
                         <li><Link to="/add" >Add Products</Link></li>

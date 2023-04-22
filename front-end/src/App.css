@@ -7,11 +7,11 @@
   pointer-events: none;
 } */
 .logo {
-  width: 45px;
+  width: 40px;
   float: left;
   margin-top: 3px;
   margin-left: 20px;
-  border-radius: 50%;
+  border-radius: 10%;
 }
 
 .nav-ul {

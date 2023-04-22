@@ -58,7 +58,7 @@ app.post("/login", async (req, resp) =>
 });
 
 //add product
-app.post("/add-product", async (req, resp) =>
+app.post("/add-product", verifyToken, async (req, resp) =>
 {
     let product = new Product(req.body);
     let result = await product.save();
@@ -67,7 +67,7 @@ app.post("/add-product", async (req, resp) =>
 
 //product list api
 
-app.get("/products", async (req, resp) =>
+app.get("/products", verifyToken, async (req, resp) =>
 {
     let products = await Product.find();
     // console.log(products.length);
@@ -82,14 +82,14 @@ app.get("/products", async (req, resp) =>
 
 // product delete api
 
-app.delete("/product/:id", async (req, resp) =>
+app.delete("/product/:id", verifyToken, async (req, resp) =>
 {
     let result = await Product.deleteOne({ _id: req.params.id });
     resp.send(result);
 
 });
 //get single product api
-app.get("/product/:id", async (req, resp) =>
+app.get("/product/:id", verifyToken, async (req, resp) =>
 {
 
     let result = await Product.findOne({ _id: req.params.id });
@@ -104,7 +104,7 @@ app.get("/product/:id", async (req, resp) =>
     }
 });
 //update single product data using put method  api
-app.put("/product/:id", async (req, resp) =>
+app.put("/product/:id", verifyToken, async (req, resp) =>
 {
     let result = await Product.updateOne(
         { _id: req.params.id },
@@ -115,7 +115,7 @@ app.put("/product/:id", async (req, resp) =>
     resp.send(result);
 });
 //search api using get method
-app.get("/search/:key", async (req, resp) =>
+app.get("/search/:key", verifyToken, async (req, resp) =>
 {
     let result = await Product.find({
         "$or": [
@@ -127,7 +127,30 @@ app.get("/search/:key", async (req, resp) =>
     });
     resp.send(result);
 });
+function verifyToken(req, resp, next) // call middleware 
+{
+    let token = req.headers.authorization;
+    if (token)
+    {
+        token = token.split(' ')[1];
+        console.warn("Middleware callled!....", token);
+        Jwt.verify(token, jwtKey, (error, valid) =>
+        {
+            if (error)
+            {
+                resp.status(401).send({ result: "Please provide valid token with header" });
 
+            } else
+            {
+                next();
+            }
+        })
+    } else
+    {
+        resp.status(403).send({ result: "Please add token with header" });
+    }
+    // console.warn("Middleware callled!....", token);
+}
 /* const connectDB = async () =>
 {
     mongoose.connect('mongodb://localhost:27017/e-comm');

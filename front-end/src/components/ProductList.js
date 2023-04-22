@@ -4,21 +4,32 @@ import { Link } from "react-router-dom";
 const ProductList = () =>
 {
     const [products, setProducts] = useState([]);
+
     useEffect(() =>
     {
         getProducts();
     }, []);
-    const getProducts = async () =>
+
+    const getProducts = async () => 
     {
-        let result = await fetch('http://localhost:5000/products'); // get method not necessary to all filed api
+        //// get method not necessary to all filed api
+        let result = await fetch('http://localhost:5000/products', {
+            headers: {
+                authorization: `bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
+        });
         result = await result.json()
         setProducts(result);
     }
+
     //console.warn(products);
     const deleteProduct = async (id) =>
     {
         let result = await fetch(`http://localhost:5000/product/${id}`, {
-            method: 'Delete'
+            method: 'Delete',
+            headers: {
+                authorization: `bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
         });
         result = await result.json();
         if (result)
@@ -31,7 +42,11 @@ const ProductList = () =>
         let key = event.target.value;
         if (key)
         {
-            let result = await fetch(`http://localhost:5000/search/${key}`);
+            let result = await fetch(`http://localhost:5000/search/${key}`, {
+                headers: {
+                    authorization: `bearer ${JSON.parse(localStorage.getItem('token'))}`
+                }
+            });
             result = await result.json();
             if (result)
             {
